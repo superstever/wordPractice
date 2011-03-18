@@ -1,0 +1,8 @@
+#Create word sandwich program
+#what it will do:
+	#spit out a word (middle of pile)
+	#ask for up or down or done
+	#will spit out another word
+	#ends when done
+	
+#create tests - use RSPEC and ask if it asks and if you get the answer.
