@@ -1,0 +1,29 @@
+indices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+items = ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety
+
+subtract maxIndex from minIndex
+midQt = maxIndex - minIndex + 1
+midQt = 9 - 0 + 1 = 10/2 = 5
+
+*Using the correct quantity offset (This is the method you should use)
+indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+midQt = 21 - 12 + 1 = 10/2 = 5
+we should have a lower range of 12 to 16; minIndex, minIndex+midQt-1
+we should have an upper range of 17 to 21; minIndex+midQt, maxindex
+
+indices = 12, 13, 14, 15, 16, 17, 18, 19, 20
+midQt = 20 - 12 + 1 = 9/2 = 4.5 floor = 4
+we should have a lower range of 12 to 15; minIndex, minIndex+midQt-1
+we should have an upper range of 16 to 20; minIndex+midQt, maxIndex
+
+
+what if we don't add the one to get a correct quantity -- then we need to make the correction when we do the recursion because when there is an odd array, we are off by 1.
+indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+midQt = 21 - 12 = 9/2 = 4.5floor = 4
+we should have a lower range of 12 to 16; minIndex, minIndex+midQt
+we should have a higher range of 17 to 21; maxIndex-midQt, maxIndex
+
+indices = 12, 13, 14, 15, 16, 17, 18, 19, 20
+midQt = 20 - 12 = 8/2 = 4.5floor = 4
+we should have a lower range of 12 to 16; minIndex, minIndex+midQt
+we should have a higher range of 17 to 20; maxIndex-midQt-1, maxIndex
