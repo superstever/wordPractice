@@ -1,0 +1,16 @@
+This story steps through the program to understand the events
+
+scenario
+beginning
+load array
+take midpt "midQt"
+prompt user for response - "askHighLowCorrect"
+get response from user - "directionResponse"
+re-adjust midpt BASED on response "updateWordRange"
+run getHalf -- which gives a new array range "getHalf"
+suggest the new point - if previous was low, then the suggestion is the lowerRange of getHalf; if the previous was hgh, then the suggestion is the higherRange of getHalf "suggest"
+prompt user for response - "askHighLowCorrect"
+get response from user - "directionResponse"
+re-adjust midpt Based on response "updateWordRange"
+run getHalf -- which gives a new array range "getHalf"
+suggest the new point - if previous was high, then the suggestion is the upper range of getHalf
