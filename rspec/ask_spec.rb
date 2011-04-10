@@ -136,10 +136,21 @@ class Ask
   end #end "logic"
 
 #this finishing function causes the program to quit before it can get a reading. Explore stubs and mocks  http://stackoverflow.com/questions/1480537/how-can-i-validate-exits-and-aborts-in-rspec
-# describe "finishing" do
-#   it "ends gracefully when told 'done' in the 'giveHalf' method" do
+ describe "finishing" do
+#   before(:each) do
+#     #create a lambda routine that will not let the exiting method end rspec
+#     def finishRspec
+#      ret = lambda {giveHalf(1, 4, 'done')}
+#      ret.call
+#      "this is printed"
+#     end
+#   end
+   it "ends gracefully when told 'done' in the 'giveHalf' method" do
 #   lambda giveHalf(1, 4, 'done').should exit_with_code(0)
-##   lambda giveHalf(1, 4, 'done').should raise_error SystemExit
-#  end
-# end
+   ret =  lambda {giveHalf(1, 4, 'done').should raise_error SystemExit}
+   ret.call.should raise_error SystemExit
+#    puts finishRspec
+    puts "after the finishRspec all does this show up?"
+  end
+ end #end "finishing"
 end #end Class Ask
