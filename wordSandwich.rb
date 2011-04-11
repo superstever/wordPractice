@@ -9,9 +9,42 @@ class WordSandwich
     @wordArray = wordArray
   end
   
+  def value
+     return @wordArray
+  end
+  
   def length
     return @wordArray.length
   end
+  
+  #giveHalf should update a variable instead of returning a value.
+  #also create a reader method to read those variables
+  
+  #*Using the correct quantity offset (This is the method you should use)
+  #indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+  #midQt = 21 - 12 + 1 = 10/2 = 5
+  #we should have a lower range of 12 to 16; minIndex, minIndex+midQt-1
+  #we should have an upper range of 17 to 21; minIndex+midQt, maxindex
+  #
+  #indices = 12, 13, 14, 15, 16, 17, 18, 19, 20
+  #midQt = 20 - 12 + 1 = 9/2 = 4.5 floor = 4
+  #we should have a lower range of 12 to 15; minIndex, minIndex+midQt-1
+  #we should have an upper range of 16 to 20; minIndex+midQt, maxIndex
+  def giveHalf(wordArrayMin, wordArrayMax, directionInput)
+    case directionResponse(directionInput)
+    when -1 then
+      offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
+      newMid = wordArrayMin + offsetMidQ - 1
+      return wordArrayMin, newMid
+    when 0 then
+      quitProgram
+    when 1 then
+      offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
+      newMid = wordArrayMin + offsetMidQ
+      return newMid, wordArrayMax
+    end 
+  end
+  
 end
 
 def askHighLowCorrect
@@ -37,30 +70,6 @@ def midQt(arrayLength)
   return midQuantity
 end
 
-#*Using the correct quantity offset (This is the method you should use)
-#indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
-#midQt = 21 - 12 + 1 = 10/2 = 5
-#we should have a lower range of 12 to 16; minIndex, minIndex+midQt-1
-#we should have an upper range of 17 to 21; minIndex+midQt, maxindex
-#
-#indices = 12, 13, 14, 15, 16, 17, 18, 19, 20
-#midQt = 20 - 12 + 1 = 9/2 = 4.5 floor = 4
-#we should have a lower range of 12 to 15; minIndex, minIndex+midQt-1
-#we should have an upper range of 16 to 20; minIndex+midQt, maxIndex
-def giveHalf(wordArrayMin, wordArrayMax, directionInput)
-  case directionResponse(directionInput)
-  when -1 then
-    offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
-    newMid = wordArrayMin + offsetMidQ - 1
-    return wordArrayMin, newMid
-  when 0 then
-    quitProgram
-  when 1 then
-    offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
-    newMid = wordArrayMin + offsetMidQ
-    return newMid, wordArrayMax
-  end 
-end
 
 #when given an array range, discerned by the wordArrayMin and wordArrayMax, it will use the directionInput
 #to exclude the incorrectly suggested word in the new array range. For example, if we have an array

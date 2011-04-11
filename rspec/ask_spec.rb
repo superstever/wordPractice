@@ -14,6 +14,18 @@ class Ask
       aSandwich = WordSandwich.new(evenArray)
       aSandwich.length.should equal(evenArray.length)
     end
+    
+    it "whose first item is known" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      aSandwich.value.first.should equal(evenArray.first)      
+    end
+    
+    it "whose last item is known" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      aSandwich.value.last.should equal(evenArray.last)
+    end
   end
   
   describe "Calculate middle quantity" do
@@ -64,7 +76,10 @@ class Ask
     end
   end
   
-  describe "logic" do
+  #TODO: test should be written to access the wordArrayMax and wordArrayMin variables.
+  #the giveHalf function should update the variable.
+  
+  describe "The word sandwich object should have the correct logic" do
     #*Using the correct quantity offset (This is the method you should use)
     #indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
     #midQt = 21 - 12 + 1 = 10/2 = 5
@@ -76,26 +91,37 @@ class Ask
     #we should have a lower range of 12 to 15; minIndex, minIndex+midQt-1
     #we should have an upper range of 16 to 20; minIndex+midQt, maxIndex
     it "- should spit out the correct indices for an EVEN array with high direction" do
+      evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+      bSandwich = WordSandwich.new(evenIndices)
       solnArray = [12, 16]
-      giveHalf(12, 21, 'high').should == solnArray
+      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'high').should == solnArray
     end
     
     it "- should spit out the correct indices for an ODD array with high direction" do
+      oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
+      bSandwich = WordSandwich.new(oddIndices)
       solnArray = [12, 15]
-      giveHalf(12, 20, 'high').should == solnArray
+      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'high').should == solnArray
     end
     
     it "- should spit out the correct indices for an EVEN array with low direction" do
+      evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+      bSandwich = WordSandwich.new(evenIndices)
       solnArray = [17, 21]
-      giveHalf(12, 21, 'low').should == solnArray
+      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'low').should == solnArray
     end
     
     it "- should spit out the correct indices for an ODD array with low direction" do
+      oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
+      bSandwich = WordSandwich.new(oddIndices)
       solnArray = [16, 20]
-      giveHalf(12, 20, 'low').should == solnArray
-    end   
+      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'low').should == solnArray
+    end
+  end
+  
+  
+  describe "logic" do 
 
-    #maybe create a condition for done
     
     it "- should suggest the correct index given a direction on the first case" do
       #If we give it an array of indices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
@@ -146,10 +172,12 @@ class Ask
 #     end
 #   end
    it "ends gracefully when told 'done' in the 'giveHalf' method" do
-#   lambda giveHalf(1, 4, 'done').should exit_with_code(0)
-   ret =  lambda {giveHalf(1, 4, 'done').should raise_error SystemExit}
-   ret.call.should raise_error SystemExit
+#   ret =  lambda {giveHalf(1, 4, 'done').should raise_error SystemExit}
+#   ret.call
+
+
 #    puts finishRspec
+
     puts "after the finishRspec all does this show up?"
   end
  end #end "finishing"
