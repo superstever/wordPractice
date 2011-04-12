@@ -4,10 +4,7 @@
 require '../wordSandwich.rb'
 
 class Ask
-  describe "read from external ruby file" do
-    callExtMethodTest(1,2)
-  end
-  
+
   describe "initializing the word sandwich object should create an object" do
     it "whose length can be read" do
       evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
@@ -26,6 +23,35 @@ class Ask
       aSandwich = WordSandwich.new(evenArray)
       aSandwich.value.last.should equal(evenArray.last)
     end
+    
+    it "whose minIndex can be called" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      aSandwich.wordArrayMin.should equal(0)
+    end
+    
+    it "whose maxIndex can be called" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      aSandwich.wordArrayMax.should equal(9)
+    end
+    
+    it "should be settable for min index" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      testValue = 1
+      aSandwich.setWordArrayMin(testValue)
+      aSandwich.wordArrayMin.should equal(testValue)
+    end
+    
+    it "should be settable for max index" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      testValue = 5
+      aSandwich.setWordArrayMax(testValue)
+      aSandwich.wordArrayMax.should equal(testValue)
+    end
+    
   end
   
   describe "Calculate middle quantity" do
@@ -94,28 +120,42 @@ class Ask
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
       solnArray = [12, 16]
-      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'high').should == solnArray
+      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'high')
+      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+      actualArray.should == solnArray
     end
     
     it "- should spit out the correct indices for an ODD array with high direction" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
       solnArray = [12, 15]
-      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'high').should == solnArray
+      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'high')
+      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+      actualArray.should == solnArray
     end
     
     it "- should spit out the correct indices for an EVEN array with low direction" do
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
       solnArray = [17, 21]
-      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'low').should == solnArray
+      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'low')
+      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+      actualArray.should == solnArray
     end
     
     it "- should spit out the correct indices for an ODD array with low direction" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
       solnArray = [16, 20]
-      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'low').should == solnArray
+      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'low')
+      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+      actualArray.should == solnArray
+    end
+    
+    it "- should run the exit routine if the user types in 'done'" do
+      oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
+      bSandwich = WordSandwich.new(oddIndices)
+      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'done').should equal(0)
     end
   end
   
@@ -161,24 +201,4 @@ class Ask
     end
   end #end "logic"
 
-#this finishing function causes the program to quit before it can get a reading. Explore stubs and mocks  http://stackoverflow.com/questions/1480537/how-can-i-validate-exits-and-aborts-in-rspec
- describe "finishing" do
-#   before(:each) do
-#     #create a lambda routine that will not let the exiting method end rspec
-#     def finishRspec
-#      ret = lambda {giveHalf(1, 4, 'done')}
-#      ret.call
-#      "this is printed"
-#     end
-#   end
-   it "ends gracefully when told 'done' in the 'giveHalf' method" do
-#   ret =  lambda {giveHalf(1, 4, 'done').should raise_error SystemExit}
-#   ret.call
-
-
-#    puts finishRspec
-
-    puts "after the finishRspec all does this show up?"
-  end
- end #end "finishing"
 end #end Class Ask

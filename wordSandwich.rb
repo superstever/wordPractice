@@ -1,16 +1,31 @@
 #wordSandwich.rb
 
-def callExtMethodTest(x, y)
-  puts "We received a call for this method. Values are #{x} and #{y}"
-end
 
 class WordSandwich
   def initialize(wordArray)
     @wordArray = wordArray
+    @wordArrayMin = 0
+    @wordArrayMax = @wordArray.length-1
   end
   
   def value
      return @wordArray
+  end
+  
+  def wordArrayMin
+    return @wordArrayMin
+  end
+  
+  def wordArrayMax
+    return @wordArrayMax
+  end
+  
+  def setWordArrayMin(arrayIndexMin)
+    @wordArrayMin = arrayIndexMin
+  end
+  
+  def setWordArrayMax(arrayIndexMax)
+    @wordArrayMax = arrayIndexMax
   end
   
   def length
@@ -34,14 +49,14 @@ class WordSandwich
     case directionResponse(directionInput)
     when -1 then
       offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
-      newMid = wordArrayMin + offsetMidQ - 1
-      return wordArrayMin, newMid
+        @wordArrayMin = wordArrayMin
+        @wordArrayMax = wordArrayMin + offsetMidQ - 1
     when 0 then
       quitProgram
     when 1 then
       offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
-      newMid = wordArrayMin + offsetMidQ
-      return newMid, wordArrayMax
+      @wordArrayMin = wordArrayMin + offsetMidQ
+      @wordArrayMax = wordArrayMax
     end 
   end
   
@@ -98,6 +113,6 @@ def suggest(wordArrayMin, wordArrayMax, directionInput)
 end
 
 def quitProgram
-  Kernel.at_exit {puts "You clicked done. Exiting program!"}
-  Kernel.exit(status=true)
+  puts "Great. You typed 'done. Goodbye!"
+  return 0 
 end
