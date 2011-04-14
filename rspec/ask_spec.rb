@@ -68,7 +68,7 @@ class Ask
   
   describe "Prompt" do
     it "asks you if the suggestion was high, low or correct" do
-      askHighLowCorrect.should match(/high, low or correct/)
+      askHighLowDone.should match(/high, low or correct/)
     end
     
     it "gets a 'high' in any case and formats it to a 1" do
@@ -199,7 +199,8 @@ class Ask
       exampleIndices.length.should equal(exampleArray.length) #make sure my indices and exampleArray are the same length for the test cases
       exampleArray[midQt(exampleArray.length)].should == ("eighty")
     end
-    
+
+#optional remove    
     it "- should then suggest the correct range to run recursion when given a low on the first case" do
       #If we give it an array of indices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
       #and run midPt - we get a starting index to test. This is our first suggestion.
@@ -209,7 +210,7 @@ class Ask
       solnArray = [1, 14]
       updateWordRange(exampleArray.find_index('ten'), exampleArray.find_index('one-fifty'), 'low').should == solnArray
     end
-    
+#optional remove    
     it "- should then suggest the correct range to run recursion when given a high on the first case" do
       exampleIndices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
       exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]

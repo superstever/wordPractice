@@ -32,8 +32,8 @@ class WordSandwich
     return @wordArray.length
   end
   
-  #giveHalf should update a variable instead of returning a value.
-  #also create a reader method to read those variables
+  
+  #giveHalf gives the new midpoint -- is that really what it does, or does it give a new range?
   
   #*Using the correct quantity offset (This is the method you should use)
   #indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
@@ -49,17 +49,16 @@ class WordSandwich
     case directionResponse(directionInput)
     when -1 then
       offsetMidQ = midQt(@wordArrayMax-@wordArrayMin+1)
-#        @wordArrayMin = wordArrayMin
         @wordArrayMax = @wordArrayMin + offsetMidQ - 1
     when 0 then
       quitProgram
     when 1 then
       offsetMidQ = midQt(@wordArrayMax-@wordArrayMin+1)
       @wordArrayMin = @wordArrayMin + offsetMidQ
-#      @wordArrayMax = wordArrayMax
     end 
   end
-  
+ 
+ #WARNING: this suggest is wrong. Reconsider using midpt this way, here it is used as an index. But midqt outputs an offset. 
   def suggest(midpt, directionInput)
     case directionResponse(directionInput)
     when -1 then
@@ -73,8 +72,14 @@ class WordSandwich
   
 end
 
-def askHighLowCorrect
+def askHighLowDone
   return "Was the suggestion high, low or correct?"
+end
+
+def getInput
+  userInput = gets
+  userInput = userInput.chomp
+  return userInput
 end
 
 def directionResponse(userInput)
@@ -96,6 +101,10 @@ def midQt(arrayLength)
   return midQuantity
 end
 
+def quitProgram
+  puts "Great. You typed 'done. Goodbye!"
+  return 0 
+end
 
 #when given an array range, discerned by the wordArrayMin and wordArrayMax, it will use the directionInput
 #to exclude the incorrectly suggested word in the new array range. For example, if we have an array
@@ -110,11 +119,4 @@ def updateWordRange(wordArrayMin, wordArrayMax, directionInput)
   when 0 then
     quitProgram
   end
-end
-
-
-
-def quitProgram
-  puts "Great. You typed 'done. Goodbye!"
-  return 0 
 end
