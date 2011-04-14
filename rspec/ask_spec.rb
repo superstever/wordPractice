@@ -120,7 +120,9 @@ class Ask
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
       solnArray = [12, 16]
-      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'high')
+      bSandwich.setWordArrayMin(evenIndices.first)
+      bSandwich.setWordArrayMax(evenIndices.last)
+      bSandwich.giveHalf('high')
       actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
       actualArray.should == solnArray
     end
@@ -129,7 +131,9 @@ class Ask
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
       solnArray = [12, 15]
-      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'high')
+      bSandwich.setWordArrayMin(oddIndices.first)
+      bSandwich.setWordArrayMax(oddIndices.last)
+      bSandwich.giveHalf('high')
       actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
       actualArray.should == solnArray
     end
@@ -138,7 +142,9 @@ class Ask
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
       solnArray = [17, 21]
-      bSandwich.giveHalf(evenIndices.first, evenIndices.last, 'low')
+      bSandwich.setWordArrayMin(evenIndices.first)
+      bSandwich.setWordArrayMax(evenIndices.last)
+      bSandwich.giveHalf('low')
       actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
       actualArray.should == solnArray
     end
@@ -147,7 +153,9 @@ class Ask
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
       solnArray = [16, 20]
-      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'low')
+      bSandwich.setWordArrayMin(oddIndices.first)
+      bSandwich.setWordArrayMax(oddIndices.last)
+      bSandwich.giveHalf('low')
       actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
       actualArray.should == solnArray
     end
@@ -155,7 +163,27 @@ class Ask
     it "- should run the exit routine if the user types in 'done'" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
-      bSandwich.giveHalf(oddIndices.first, oddIndices.last, 'done').should equal(0)
+      bSandwich.giveHalf('done').should equal(0)
+    end
+    
+    it " - should make a suggestion for the user that is the max array end point if 'high'" do
+      exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
+      cSandwich = WordSandwich.new(exampleArray)
+      cSandwich.setWordArrayMin(exampleArray[1])
+      cSandwich.setWordArrayMax(exampleArray[4])
+      midpoint = 4
+      cSandwich.suggest(midpoint, "high")
+      cSandwich.wordArrayMax.should  equal(exampleArray.find_index('forty'))
+    end
+    
+    it " - should make a suggestion for the user that is the min array end point if 'low" do
+      exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
+      cSandwich = WordSandwich.new(exampleArray)
+      cSandwich.setWordArrayMin(exampleArray[1])
+      cSandwich.setWordArrayMax(exampleArray[4])
+      midpoint = 1
+      cSandwich.suggest(midpoint, "low")
+      cSandwich.wordArrayMin.should  equal(exampleArray.find_index('thirty'))
     end
   end
   
@@ -190,15 +218,6 @@ class Ask
       updateWordRange(exampleArray.find_index('ten'), exampleArray.find_index('one-fifty'), 'high').should == solnArray
     end
     
-    it "should make a suggestion for the user that is the max array end point if 'high'" do
-      exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
-      suggest(exampleArray.find_index('twenty'), exampleArray.find_index('fifty'), "high").should  equal(exampleArray.find_index('forty'))
-    end
-    
-    it "should make a suggestion for the user that is the min array end point if 'low" do
-      exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
-      suggest(exampleArray.find_index('twenty'), exampleArray.find_index('fifty'), "low").should  equal(exampleArray.find_index('thirty'))
-    end
   end #end "logic"
 
 end #end Class Ask

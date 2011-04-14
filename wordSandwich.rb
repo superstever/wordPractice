@@ -45,19 +45,30 @@ class WordSandwich
   #midQt = 20 - 12 + 1 = 9/2 = 4.5 floor = 4
   #we should have a lower range of 12 to 15; minIndex, minIndex+midQt-1
   #we should have an upper range of 16 to 20; minIndex+midQt, maxIndex
-  def giveHalf(wordArrayMin, wordArrayMax, directionInput)
+  def giveHalf(directionInput)
     case directionResponse(directionInput)
     when -1 then
-      offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
-        @wordArrayMin = wordArrayMin
-        @wordArrayMax = wordArrayMin + offsetMidQ - 1
+      offsetMidQ = midQt(@wordArrayMax-@wordArrayMin+1)
+#        @wordArrayMin = wordArrayMin
+        @wordArrayMax = @wordArrayMin + offsetMidQ - 1
     when 0 then
       quitProgram
     when 1 then
-      offsetMidQ = midQt(wordArrayMax-wordArrayMin+1)
-      @wordArrayMin = wordArrayMin + offsetMidQ
-      @wordArrayMax = wordArrayMax
+      offsetMidQ = midQt(@wordArrayMax-@wordArrayMin+1)
+      @wordArrayMin = @wordArrayMin + offsetMidQ
+#      @wordArrayMax = wordArrayMax
     end 
+  end
+  
+  def suggest(midpt, directionInput)
+    case directionResponse(directionInput)
+    when -1 then
+      @wordArrayMax =  midpt-1 #gives a new range that excludes the erroneous suggestion
+    when 1 then
+      @wordArrayMin = midpt+1
+    when 0 then
+      return 'done'
+    end
   end
   
 end
@@ -101,16 +112,7 @@ def updateWordRange(wordArrayMin, wordArrayMax, directionInput)
   end
 end
 
-def suggest(wordArrayMin, wordArrayMax, directionInput)
-  case directionResponse(directionInput)
-  when -1 then
-    return wordArrayMax-1 #gives a new range that excludes the erroneous suggestion
-  when 1 then
-    return wordArrayMin+1
-  when 0 then
-    return 'done'
-  end
-end
+
 
 def quitProgram
   puts "Great. You typed 'done. Goodbye!"
