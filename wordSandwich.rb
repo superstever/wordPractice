@@ -12,12 +12,20 @@ class WordSandwich
      return @wordArray
   end
   
+  def midPtValue
+    return @wordArray[@wordArrayMidPt]
+  end
+  
   def wordArrayMin
     return @wordArrayMin
   end
   
   def wordArrayMax
     return @wordArrayMax
+  end
+  
+  def wordArrayMidPt
+    return @wordArrayMidPt
   end
   
   def setWordArrayMin(arrayIndexMin)
@@ -28,12 +36,16 @@ class WordSandwich
     @wordArrayMax = arrayIndexMax
   end
   
+  def setWordArrayMidPt(midPt)
+    @wordArrayMidPt = midPt
+  end
+  
   def length
     return @wordArray.length
   end
   
   
-  #giveHalf gives the new midpoint -- is that really what it does, or does it give a new range?
+  #giveHalf gives the new midpoint - it sets the @wordArrayMidPt variable which is an index of the midpt
   
   #*Using the correct quantity offset (This is the method you should use)
   #indices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
@@ -45,30 +57,21 @@ class WordSandwich
   #midQt = 20 - 12 + 1 = 9/2 = 4.5 floor = 4
   #we should have a lower range of 12 to 15; minIndex, minIndex+midQt-1
   #we should have an upper range of 16 to 20; minIndex+midQt, maxIndex
-  def giveHalf(directionInput)
-    case directionResponse(directionInput)
-    when -1 then
+  def giveHalf
       offsetMidQ = midQt(@wordArrayMax-@wordArrayMin+1)
-        @wordArrayMax = @wordArrayMin + offsetMidQ - 1
-    when 0 then
-      quitProgram
-    when 1 then
-      offsetMidQ = midQt(@wordArrayMax-@wordArrayMin+1)
-      @wordArrayMin = @wordArrayMin + offsetMidQ
-    end 
+        @wordArrayMidPt = @wordArrayMin + offsetMidQ - 1 
   end
- 
- #WARNING: this suggest is wrong. Reconsider using midpt this way, here it is used as an index. But midqt outputs an offset. 
-  def suggest(midpt, directionInput)
-    case directionResponse(directionInput)
-    when -1 then
-      @wordArrayMax =  midpt-1 #gives a new range that excludes the erroneous suggestion
-    when 1 then
-      @wordArrayMin = midpt+1
-    when 0 then
-      return 'done'
-    end
+   
+def hone(directionInput)
+  case directionResponse(directionInput)
+  when -1 then
+    @wordArrayMax =  @wordArrayMidPt-1 #gives a new upper index that excludes the erroneous suggestion
+  when 1 then
+    @wordArrayMin = @wordArrayMidPt+1 #gives a new upper index that excludes the erroneous suggestion
+  when 0 then
+    return quitProgram
   end
+end  
   
 end
 

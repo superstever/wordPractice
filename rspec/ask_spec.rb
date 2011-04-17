@@ -52,6 +52,21 @@ class Ask
       aSandwich.wordArrayMax.should equal(testValue)
     end
     
+    it "should be settable for the midpoint" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      testValue = 4
+      aSandwich.setWordArrayMidPt(testValue)
+      aSandwich.wordArrayMidPt.should equal(testValue)
+    end
+    
+    it "should return the correct midpoint value for a given midpoint index" do
+      evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
+      aSandwich = WordSandwich.new(evenArray)
+      testValue = 4
+      aSandwich.setWordArrayMidPt(testValue)
+      aSandwich.midPtValue.should equal(evenArray[testValue])      
+    end
   end
   
   describe "Calculate middle quantity" do
@@ -119,51 +134,64 @@ class Ask
     it "- should spit out the correct indices for an EVEN array with high direction" do
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
-      solnArray = [12, 16]
-      bSandwich.setWordArrayMin(evenIndices.first)
+#      solnArray = [12, 16]
+      newMidPt = (21-12+1)/2-1   #create the new midpt offset
+      bSandwich.setWordArrayMin(evenIndices.first) #we are using the value of each element as the index. So we set the min to index 12 for this test
       bSandwich.setWordArrayMax(evenIndices.last)
-      bSandwich.giveHalf('high')
-      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-      actualArray.should == solnArray
+      bSandwich.giveHalf
+#      bSandwich.giveHalf('high')
+#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+#      actualArray.should == solnArray
+      bSandwich.wordArrayMidPt.should == (evenIndices.first + newMidPt) #we add the offset to the first index and compare that result to giveHalf
     end
     
     it "- should spit out the correct indices for an ODD array with high direction" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
-      solnArray = [12, 15]
+#      solnArray = [12, 15]
+      newMidPt = ((20-12+1)/2-1).floor #create the new midpt offset
       bSandwich.setWordArrayMin(oddIndices.first)
       bSandwich.setWordArrayMax(oddIndices.last)
-      bSandwich.giveHalf('high')
-      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-      actualArray.should == solnArray
+      bSandwich.giveHalf
+#      bSandwich.giveHalf('high')
+#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+#      actualArray.should == solnArray
+      bSandwich.wordArrayMidPt.should == (oddIndices.first + newMidPt)
+      
     end
     
     it "- should spit out the correct indices for an EVEN array with low direction" do
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
-      solnArray = [17, 21]
+#      solnArray = [17, 21]
+      newMidPt = (21-12+1)/2-1  #create the new midpt offset
       bSandwich.setWordArrayMin(evenIndices.first)
       bSandwich.setWordArrayMax(evenIndices.last)
-      bSandwich.giveHalf('low')
-      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-      actualArray.should == solnArray
+      bSandwich.giveHalf
+#      bSandwich.giveHalf('low')
+#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+#      actualArray.should == solnArray
+      bSandwich.wordArrayMidPt.should == (evenIndices.first + newMidPt)
     end
     
     it "- should spit out the correct indices for an ODD array with low direction" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
-      solnArray = [16, 20]
+#      solnArray = [16, 20]
+      newMidPt = (20-12+1)/2 - 1
       bSandwich.setWordArrayMin(oddIndices.first)
       bSandwich.setWordArrayMax(oddIndices.last)
-      bSandwich.giveHalf('low')
-      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-      actualArray.should == solnArray
+      bSandwich.giveHalf
+#      bSandwich.giveHalf('low') #create the new midpt offset
+#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
+#      actualArray.should == solnArray
+      bSandwich.wordArrayMidPt.should == (oddIndices.first + newMidPt)
     end
     
     it "- should run the exit routine if the user types in 'done'" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
-      bSandwich.giveHalf('done').should equal(0)
+      bSandwich.hone('done').should equal(0)
     end
     
     it " - should make a suggestion for the user that is the max array end point if 'high'" do
@@ -171,8 +199,8 @@ class Ask
       cSandwich = WordSandwich.new(exampleArray)
       cSandwich.setWordArrayMin(exampleArray[1])
       cSandwich.setWordArrayMax(exampleArray[4])
-      midpoint = 4
-      cSandwich.suggest(midpoint, "high")
+      cSandwich.setWordArrayMidPt(4)
+      cSandwich.hone("high")
       cSandwich.wordArrayMax.should  equal(exampleArray.find_index('forty'))
     end
     
@@ -181,10 +209,21 @@ class Ask
       cSandwich = WordSandwich.new(exampleArray)
       cSandwich.setWordArrayMin(exampleArray[1])
       cSandwich.setWordArrayMax(exampleArray[4])
-      midpoint = 1
-      cSandwich.suggest(midpoint, "low")
+      cSandwich.setWordArrayMidPt(1)
+      cSandwich.hone("low")
       cSandwich.wordArrayMin.should  equal(exampleArray.find_index('thirty'))
     end
+    
+    #let's see if we can avoid using midpt all together in the routine. Is it possible
+    #to solely rely on giveHalf? This way we can have more consistent code
+    it " - for curiosity. Does midpt equal giveHalf?" do
+      evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21      
+      dSandwich = WordSandwich.new(evenIndices)
+      dSandwich.setWordArrayMin(evenIndices.first)
+      dSandwich.setWordArrayMax(evenIndices.last)
+      dSandwich.giveHalf.should ==(midQt(evenIndices.length) + evenIndices.first)
+    end
+    
   end
   
   
