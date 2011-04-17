@@ -2,9 +2,8 @@
 
 #require 'spec_helper'
 require '../wordSandwich.rb'
-
+#require '../wordSandwichMain.rb'
 class Ask
-
   describe "initializing the word sandwich object should create an object" do
     it "whose length can be read" do
       evenArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"]
@@ -134,28 +133,20 @@ class Ask
     it "- should spit out the correct indices for an EVEN array with high direction" do
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
-#      solnArray = [12, 16]
       newMidPt = (21-12+1)/2-1   #create the new midpt offset
       bSandwich.setWordArrayMin(evenIndices.first) #we are using the value of each element as the index. So we set the min to index 12 for this test
       bSandwich.setWordArrayMax(evenIndices.last)
       bSandwich.giveHalf
-#      bSandwich.giveHalf('high')
-#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-#      actualArray.should == solnArray
       bSandwich.wordArrayMidPt.should == (evenIndices.first + newMidPt) #we add the offset to the first index and compare that result to giveHalf
     end
     
     it "- should spit out the correct indices for an ODD array with high direction" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
-#      solnArray = [12, 15]
       newMidPt = ((20-12+1)/2-1).floor #create the new midpt offset
       bSandwich.setWordArrayMin(oddIndices.first)
       bSandwich.setWordArrayMax(oddIndices.last)
       bSandwich.giveHalf
-#      bSandwich.giveHalf('high')
-#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-#      actualArray.should == solnArray
       bSandwich.wordArrayMidPt.should == (oddIndices.first + newMidPt)
       
     end
@@ -163,28 +154,20 @@ class Ask
     it "- should spit out the correct indices for an EVEN array with low direction" do
       evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
       bSandwich = WordSandwich.new(evenIndices)
-#      solnArray = [17, 21]
       newMidPt = (21-12+1)/2-1  #create the new midpt offset
       bSandwich.setWordArrayMin(evenIndices.first)
       bSandwich.setWordArrayMax(evenIndices.last)
       bSandwich.giveHalf
-#      bSandwich.giveHalf('low')
-#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-#      actualArray.should == solnArray
       bSandwich.wordArrayMidPt.should == (evenIndices.first + newMidPt)
     end
     
     it "- should spit out the correct indices for an ODD array with low direction" do
       oddIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20
       bSandwich = WordSandwich.new(oddIndices)
-#      solnArray = [16, 20]
       newMidPt = (20-12+1)/2 - 1
       bSandwich.setWordArrayMin(oddIndices.first)
       bSandwich.setWordArrayMax(oddIndices.last)
       bSandwich.giveHalf
-#      bSandwich.giveHalf('low') #create the new midpt offset
-#      actualArray = [bSandwich.wordArrayMin, bSandwich.wordArrayMax]
-#      actualArray.should == solnArray
       bSandwich.wordArrayMidPt.should == (oddIndices.first + newMidPt)
     end
     
@@ -216,20 +199,18 @@ class Ask
     
     #let's see if we can avoid using midpt all together in the routine. Is it possible
     #to solely rely on giveHalf? This way we can have more consistent code
-    it " - for curiosity. Does midpt equal giveHalf?" do
-      evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21      
-      dSandwich = WordSandwich.new(evenIndices)
-      dSandwich.setWordArrayMin(evenIndices.first)
-      dSandwich.setWordArrayMax(evenIndices.last)
-      dSandwich.giveHalf.should ==(midQt(evenIndices.length) + evenIndices.first)
-    end
+#   it " - for curiosity. Does midpt equal giveHalf?" do
+#     evenIndices = 12, 13, 14, 15, 16, 17, 18, 19, 20, 21      
+#     dSandwich = WordSandwich.new(evenIndices)
+#     dSandwich.setWordArrayMin(evenIndices.first)
+#     dSandwich.setWordArrayMax(evenIndices.last)
+#     dSandwich.giveHalf.should ==(midQt(evenIndices.length) + evenIndices.first)
+#   end
     
   end
   
   
   describe "logic" do 
-
-    
     it "- should suggest the correct index given a direction on the first case" do
       #If we give it an array of indices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
       #and run midPt - we get a starting index to test. This is our first suggestion.
@@ -239,25 +220,21 @@ class Ask
       exampleArray[midQt(exampleArray.length)].should == ("eighty")
     end
 
-#optional remove    
-    it "- should then suggest the correct range to run recursion when given a low on the first case" do
-      #If we give it an array of indices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
-      #and run midPt - we get a starting index to test. This is our first suggestion.
-      exampleIndices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
-      exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
-      userResponse = 'low'
-      solnArray = [1, 14]
-      updateWordRange(exampleArray.find_index('ten'), exampleArray.find_index('one-fifty'), 'low').should == solnArray
-    end
-#optional remove    
-    it "- should then suggest the correct range to run recursion when given a high on the first case" do
-      exampleIndices = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
-      exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
-      userResponse = 'high'
-      solnArray = [0, 13]
-      updateWordRange(exampleArray.find_index('ten'), exampleArray.find_index('one-fifty'), 'high').should == solnArray
-    end
-    
   end #end "logic"
+  
+#  describe "Main" do
+#    it "- the wordArray should load properly" do
+#      #create a testDictionary of 7 words and load it. Check the first and last name of the array.
+#      targetPtr = File.new(testDict, 'a')
+#      wordsToLoad = %w[apple, banana, carrot, durian, egg plant, fig, grapefruit]
+#      wordsToLoad.each {|word| targetPtr.puts word}
+#      targetPtr.close
+#      fiveLetterWordArray.first.should ==('apple')
+#    end
+#    
+#    it "- should not load line endings in the array" do
+#      
+#    end
+#  end #end Main
 
 end #end Class Ask

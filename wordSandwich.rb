@@ -1,6 +1,5 @@
 #wordSandwich.rb
 
-
 class WordSandwich
   def initialize(wordArray)
     @wordArray = wordArray
@@ -109,17 +108,4 @@ def quitProgram
   return 0 
 end
 
-#when given an array range, discerned by the wordArrayMin and wordArrayMax, it will use the directionInput
-#to exclude the incorrectly suggested word in the new array range. For example, if we have an array
-#exampleArray = ["ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred", "one-ten", "one-twenty", "one-thirty", "one-forty", "one-fifty"]
-#The user types in "ninety" in the Word Sandwich game. That value is too high. Then 
-def updateWordRange(wordArrayMin, wordArrayMax, directionInput)
-  case directionResponse(directionInput)
-  when -1 then
-    return wordArrayMin, wordArrayMax-1 #gives a new range that excludes the erroneous suggestion
-  when 1 then
-    return wordArrayMin+1, wordArrayMax
-  when 0 then
-    quitProgram
-  end
-end
+

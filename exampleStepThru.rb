@@ -13,14 +13,13 @@ myWordSandwich.giveHalf(userInput) #if done, we exit the program; if high, giveH
 exampleWordSandiwch.new([0 1 2 3 4 5 6 7 8 9 10]) *
 midpoint = 0 + midQt(exampleWordSandwich.length)
 exampleWordSandwich.setWordArrayMidPt(midpoint)
-exampleWordSandwich.hone(userInput) yields 
-what it needs is a new midpoint = floor((4-0+1)/2)    | option is floor((6+10)/2) 8
-
+exampleWordSandwich.hone(userInput) sets a new min or max index inside the class
+exampleWordSandwich.giveHalf - then uses the recently set min/max value to find the new midpoint
+puts "We suggest you use the word #{exampleWordSandiwch.midPtValue}"
 askHighLowDone
 userInput = getInput
-suggest(midpoint, userInput)
+exampleWordSandwich.hone(userInput) #continue to repeat the process. Use a loop while hone(userInput) != 0
 
-giveHalf operates on 0, 4    4-0+1 = 5/2 = 2; 0+2-1 = 1 is new max!?
 
 
 
