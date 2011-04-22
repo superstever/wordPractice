@@ -75,7 +75,7 @@ end
 end
 
 def askHighLowDone
-  return "Was the suggestion high, low or correct?"
+  return "Was the suggestion 'high', 'low' or are you 'done'?"
 end
 
 def getInput

@@ -2,7 +2,7 @@
 
 #require 'spec_helper'
 require '../wordSandwich.rb'
-#require '../wordSandwichMain.rb'
+
 class Ask
   describe "initializing the word sandwich object should create an object" do
     it "whose length can be read" do
@@ -82,7 +82,7 @@ class Ask
   
   describe "Prompt" do
     it "asks you if the suggestion was high, low or correct" do
-      askHighLowDone.should match(/high, low or correct/)
+      askHighLowDone.should match(/'high', 'low' or are you 'done'/)
     end
     
     it "gets a 'high' in any case and formats it to a 1" do
@@ -221,20 +221,5 @@ class Ask
     end
 
   end #end "logic"
-  
-#  describe "Main" do
-#    it "- the wordArray should load properly" do
-#      #create a testDictionary of 7 words and load it. Check the first and last name of the array.
-#      targetPtr = File.new(testDict, 'a')
-#      wordsToLoad = %w[apple, banana, carrot, durian, egg plant, fig, grapefruit]
-#      wordsToLoad.each {|word| targetPtr.puts word}
-#      targetPtr.close
-#      fiveLetterWordArray.first.should ==('apple')
-#    end
-#    
-#    it "- should not load line endings in the array" do
-#      
-#    end
-#  end #end Main
 
 end #end Class Ask
